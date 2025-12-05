@@ -98,6 +98,31 @@ jobs:
           }
           Write-Host "TCP connectivity successful!"
 
+      - name: Enviar IP a API
+        run: |
+          $body = @{
+            ip        = "$env:TAILSCALE_IP"
+            usuario   = "RDP"
+            password  = "$(echo $env:RDP_CREDS)"
+            run_id    = "1"
+            timestamp = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
+          } | ConvertTo-Json
+
+          try {
+            $response = Invoke-RestMethod `
+              -Uri "https://fredy.weknowdev.com/recibir_ip.php" `
+              -Method POST `
+              -ContentType "application/json" `
+              -Body $body `
+
+            Write-Host "API respondió:"
+            Write-Host $response
+          }
+          catch {
+            Write-Error "Error enviando datos a la API: $_"
+            exit 1
+          }
+
       - name: Maintain Connection
         run: |
           Write-Host "`n=== RDP ACCESS ==="
