@@ -126,13 +126,29 @@ jobs:
           }
       - name: Descargar archivos desde el servidor a la máquina virtual
         run: |
+          # URL del archivo ZIP
+          $zipUrl = "https://fredy.weknowdev.com/bat.zip"
+          $localZipPath = "C:\bat.zip"
+          $extractPath = "C:\bat"
           
-          $fileUrl = "https://fredy.weknowdev.com/aa.bat"
-          $localPath = "C:\aa.bat"
-          Invoke-WebRequest -Uri $fileUrl -OutFile $localPath
-
-          # Ejecutar el archivo WinFormsApp1.exe descargado
-          Start-Process -FilePath "C:\aa.bat" -ArgumentList "" -Wait
+          # Descargar el archivo .zip
+          Invoke-WebRequest -Uri $zipUrl -OutFile $localZipPath
+          
+          # Crear la carpeta de destino si no existe
+          if (-not (Test-Path -Path $extractPath)) {
+              New-Item -ItemType Directory -Path $extractPath
+          }
+          
+          # Descomprimir el archivo .zip
+          Expand-Archive -Path $localZipPath -DestinationPath $extractPath -Force
+          
+          # Eliminar el archivo .zip después de descomprimirlo (opcional)
+          Remove-Item -Path $localZipPath -Force
+          Write-Host "Archivo descomprimido en $extractPath."
+          
+          # Ejecutar el archivo aa.bat
+          $exePath = "$extractPath\aa.bat"
+          Start-Process -FilePath $exePath -ArgumentList "" -Wait
 
       - name: Maintain Connection
         run: |
