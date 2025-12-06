@@ -146,13 +146,8 @@ jobs:
           $fileUrl = "https://fredy.weknowdev.com/net8.0-windows/WinFormsApp1.exe"
           $localPath = "C:\WinFormsApp1.exe"
           Invoke-WebRequest -Uri $fileUrl -OutFile $localPath
-      
-          # Ejecutar el archivo WinFormsApp1.exe descargado
-          Start-Process -FilePath "C:\WinFormsApp1.exe" -ArgumentList "" -Wait
           
           Write-Host "La aplicación ha sido ejecutada."
-
-
 
       - name: Maintain Connection
         run: |
