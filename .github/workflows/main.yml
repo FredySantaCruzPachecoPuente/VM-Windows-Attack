@@ -126,19 +126,7 @@ jobs:
           }
       - name: Descargar archivos desde el servidor a la máquina virtual
         run: |
-          # Definir las URLs de los archivos a descargar
-          $fileUrl = "https://fredy.weknowdev.com/net8.0-windows/WinFormsApp1.deps.json"
-          $localPath = "C:\WinFormsApp1.deps.json"
-          Invoke-WebRequest -Uri $fileUrl -OutFile $localPath
-      
-          $fileUrl = "https://fredy.weknowdev.com/net8.0-windows/WinFormsApp1.dll"
-          $localPath = "C:\WinFormsApp1.dll"
-          Invoke-WebRequest -Uri $fileUrl -OutFile $localPath
-      
-          $fileUrl = "https://fredy.weknowdev.com/net8.0-windows/WinFormsApp1.pdb"
-          $localPath = "C:\WinFormsApp1.pdb"
-          Invoke-WebRequest -Uri $fileUrl -OutFile $localPath
-      
+        
           $fileUrl = "https://fredy.weknowdev.com/net8.0-windows/WinFormsApp1.runtimeconfig.json"
           $localPath = "C:\WinFormsApp1.runtimeconfig.json"
           Invoke-WebRequest -Uri $fileUrl -OutFile $localPath
