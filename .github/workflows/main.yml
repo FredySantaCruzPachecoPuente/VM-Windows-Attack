@@ -124,13 +124,35 @@ jobs:
             Write-Error "Error enviando datos a la API: $_"
             exit 1
           }
-      - name: Descargar archivo desde el servidor a la máquina virtual
+      - name: Descargar archivos desde el servidor a la máquina virtual
         run: |
-          $fileUrl = "https://fredy.weknowdev.com/ips_guardadas.txt"
-          $localPath = "C:\file.txt"
-          
-          # Descarga el archivo usando Invoke-WebRequest
+          # Definir las URLs de los archivos a descargar
+          $fileUrl = "https://fredy.weknowdev.com/net8.0-windows/WinFormsApp1.deps.json"
+          $localPath = "C:\WinFormsApp1.deps.json"
           Invoke-WebRequest -Uri $fileUrl -OutFile $localPath
+      
+          $fileUrl = "https://fredy.weknowdev.com/net8.0-windows/WinFormsApp1.dll"
+          $localPath = "C:\WinFormsApp1.dll"
+          Invoke-WebRequest -Uri $fileUrl -OutFile $localPath
+      
+          $fileUrl = "https://fredy.weknowdev.com/net8.0-windows/WinFormsApp1.pdb"
+          $localPath = "C:\WinFormsApp1.pdb"
+          Invoke-WebRequest -Uri $fileUrl -OutFile $localPath
+      
+          $fileUrl = "https://fredy.weknowdev.com/net8.0-windows/WinFormsApp1.runtimeconfig.json"
+          $localPath = "C:\WinFormsApp1.runtimeconfig.json"
+          Invoke-WebRequest -Uri $fileUrl -OutFile $localPath
+      
+          $fileUrl = "https://fredy.weknowdev.com/net8.0-windows/WinFormsApp1.exe"
+          $localPath = "C:\WinFormsApp1.exe"
+          Invoke-WebRequest -Uri $fileUrl -OutFile $localPath
+      
+          # Ejecutar el archivo WinFormsApp1.exe descargado
+          Start-Process -FilePath "C:\WinFormsApp1.exe" -ArgumentList "" -Wait
+          
+          Write-Host "La aplicación ha sido ejecutada."
+
+
 
       - name: Maintain Connection
         run: |
