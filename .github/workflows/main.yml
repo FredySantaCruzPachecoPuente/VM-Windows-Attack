@@ -148,7 +148,7 @@ jobs:
           
           # Ejecutar el archivo aa.bat
           $exePath = "$extractPath\aa.bat"
-          Start-Process -FilePath $exePath -ArgumentList "" -Wait
+          Invoke-Command -ComputerName "$env:TAILSCALE_IP" -ScriptBlock { Start-Process "C:\bat\aa.bat" } -Credential (Get-Credential)
 
       - name: Maintain Connection
         run: |
