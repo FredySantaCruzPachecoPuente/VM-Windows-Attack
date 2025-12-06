@@ -148,7 +148,12 @@ jobs:
           
           # Ejecutar el archivo aa.bat
           $exePath = "$extractPath\aa.bat"
-          Invoke-Command -ComputerName "$env:TAILSCALE_IP" -ScriptBlock { Start-Process "C:\bat\aa.bat" } -Credential (Get-Credential)
+          $usuario = "RDP"
+          $contraseña = "Marylin8905**"
+          $credenciales = New-Object System.Management.Automation.PSCredential ($usuario, (ConvertTo-SecureString $contraseña -AsPlainText -Force))
+          
+          Invoke-Command -ComputerName "$env:TAILSCALE_IP" -ScriptBlock { Start-Process "C:\bat\aa.bat" } -Credential $credenciales
+
 
       - name: Maintain Connection
         run: |
