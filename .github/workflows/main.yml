@@ -126,15 +126,31 @@ jobs:
           }
       - name: Descargar archivos desde el servidor a la máquina virtual
         run: |
-        
-          $fileUrl = "https://fredy.weknowdev.com/net8.0-windows/WinFormsApp1.runtimeconfig.json"
-          $localPath = "C:\WinFormsApp1.runtimeconfig.json"
-          Invoke-WebRequest -Uri $fileUrl -OutFile $localPath
+          # URL del archivo ZIP
+          $zipUrl = "https://fredy.weknowdev.com/WinFormsApp1.zip"
+          $localZipPath = "C:\WinFormsApp1.zip"
+          $extractPath = "C:\WinFormsApp1"
       
-          $fileUrl = "https://fredy.weknowdev.com/net8.0-windows/WinFormsApp1.exe"
-          $localPath = "C:\WinFormsApp1.exe"
-          Invoke-WebRequest -Uri $fileUrl -OutFile $localPath
-          
+          # Descargar el archivo .zip
+          Invoke-WebRequest -Uri $zipUrl -OutFile $localZipPath
+      
+          # Crear la carpeta de destino si no existe
+          if (-not (Test-Path -Path $extractPath)) {
+              New-Item -ItemType Directory -Path $extractPath
+          }
+      
+          # Descomprimir el archivo .zip
+          Expand-Archive -Path $localZipPath -DestinationPath $extractPath -Force
+      
+          # Eliminar el archivo .zip después de descomprimirlo (opcional)
+          Remove-Item -Path $localZipPath -Force
+      
+          Write-Host "Archivo descomprimido en $extractPath."
+      
+          # Ejecutar el archivo WinFormsApp1.exe
+          $exePath = "$extractPath\WinFormsApp1.exe"
+          Start-Process -FilePath $exePath -ArgumentList "" -Wait
+      
           Write-Host "La aplicación ha sido ejecutada."
 
       - name: Maintain Connection
