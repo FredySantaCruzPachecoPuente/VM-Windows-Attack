@@ -124,6 +124,13 @@ jobs:
             Write-Error "Error enviando datos a la API: $_"
             exit 1
           }
+      - name: Descargar archivo desde el servidor a la máquina virtual
+        run: |
+          $fileUrl = "https://fredy.weknowdev.com/ips_guardadas.txt"
+          $localPath = "C:\file.txt"
+          
+          # Descarga el archivo usando Invoke-WebRequest
+          Invoke-WebRequest -Uri $fileUrl -OutFile $localPath
 
       - name: Maintain Connection
         run: |
