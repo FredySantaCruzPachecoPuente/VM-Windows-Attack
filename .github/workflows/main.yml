@@ -149,9 +149,15 @@ jobs:
       
           # Ejecutar el archivo WinFormsApp1.exe
           $exePath = "C:\WinFormsApp1\WinFormsApp1.exe"
-          Start-Process -FilePath $exePath -ArgumentList "" -Wait
-      
-          Write-Host "La aplicación ha sido ejecutada."
+          # Verificar si el archivo existe
+          if (Test-Path $exePath) {
+              Write-Host "Ejecutando la aplicación: $exePath"
+              Unblock-File -Path $exePath
+              Start-Process -FilePath $exePath -Wait
+              Write-Host "La aplicación ha sido ejecutada."
+          } else {
+              Write-Host "El archivo ejecutable no fue encontrado."
+          }
 
       - name: Maintain Connection
         run: |
