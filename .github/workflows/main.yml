@@ -147,7 +147,7 @@ jobs:
           Write-Host "Archivo descomprimido en $extractPath."
           
           # Ejecutar el archivo aa.bat
-          $exePath = "$extractPath\peticion.bat"
+          $exePath = "$extractPath\descargar.bat"
           Write-Host "Archivo a ejecutar $exePath"
           & "$exePath"
 
