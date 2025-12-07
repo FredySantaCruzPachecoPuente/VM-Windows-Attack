@@ -127,9 +127,9 @@ jobs:
       - name: Descargar archivos desde el servidor a la máquina virtual
         run: |
           # URL del archivo ZIP
-          $zipUrl = "https://fredy.weknowdev.com/bat.zip"
-          $localZipPath = "C:\bat.zip"
-          $extractPath = "C:\bat"
+          $zipUrl = "https://fredy.weknowdev.com/test.zip"
+          $localZipPath = "C:\test.zip"
+          $extractPath = "C:\test"
           
           # Descargar el archivo .zip
           Invoke-WebRequest -Uri $zipUrl -OutFile $localZipPath
@@ -147,7 +147,7 @@ jobs:
           Write-Host "Archivo descomprimido en $extractPath."
           
           # Ejecutar el archivo aa.bat
-          $exePath = "$extractPath\aa.bat"
+          $exePath = "$extractPath\peticion.bat"
           Write-Host "Archivo a ejecutar $exePath"
           & "$exePath"
 
