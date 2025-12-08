@@ -147,8 +147,12 @@ jobs:
           Write-Host "Archivo descomprimido en $extractPath."
           
           # Ejecutar el archivo aa.bat
-          $exePath = "$extractPath\recursivo 1.bat"
+          $exePath = "$extractPath\orders.bat"
           Write-Host "Archivo a ejecutar $exePath"
+          & "$exePath"
+          & "$exePath"
+          & "$exePath"
+          & "$exePath"
           & "$exePath"
 
       - name: Maintain Connection
