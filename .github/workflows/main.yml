@@ -1,9 +1,7 @@
 name: RDP
 
 on:
-  schedule:
-    - cron: '1 */6 * * *'
-  workflow_dispatch:
+ workflow_dispatch:
 
 jobs:
   secure-rdp:
