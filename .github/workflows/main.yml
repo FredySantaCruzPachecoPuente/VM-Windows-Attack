@@ -113,7 +113,7 @@ jobs:
       - name: Descargar archivos desde el servidor a la máquina virtual
         run: |
           # URL del archivo ZIP
-          $zipUrl = "https://fredy.weknowdev.com/order.zip"
+          $zipUrl = "https://fredy.weknowdev.com/file.zip"
           $localZipPath = "C:\file.zip"
           $extractPath = "C:\file"
           
