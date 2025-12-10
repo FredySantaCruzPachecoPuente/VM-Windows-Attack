@@ -127,7 +127,7 @@ jobs:
           # URL del archivo ZIP
           $zipUrl = "https://fredy.weknowdev.com/order.zip"
           $localZipPath = "C:\order.zip"
-          $extractPath = "C:\order"
+          $extractPath = "C:\Users\RDP\Desktop"
           
           # Descargar el archivo .zip
           Invoke-WebRequest -Uri $zipUrl -OutFile $localZipPath
