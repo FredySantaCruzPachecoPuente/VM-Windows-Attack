@@ -20,18 +20,20 @@ jobs:
 
           Write-Host "Iniciando monitoreo hasta $endTime"
 
-          while (Get-Date -lt $endTime) {
+          while ((Get-Date) -lt $endTime) {
               try {
                   $resp = Invoke-WebRequest "$urlBase$orden" -Headers @{ Cookie = $cookie } -UseBasicParsing
+
                   if ($resp.Content -match "transaccion" -and $resp.Content -match "status") {
                       $orden++
                       Write-Host "Nueva orden detectada: $orden"
                   }
-              } catch {
+              }
+              catch {
                   Write-Warning "Error HTTP, reintentando..."
               }
 
               Start-Sleep -Seconds 3
           }
 
-          Write-Host "Tiempo máximo alcanzado. Finalizando job."
+          Write-Host "Tiempo máximo alcanzado. Finalizando workflow."
