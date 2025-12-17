@@ -132,11 +132,26 @@ jobs:
           Remove-Item -Path $localZipPath -Force
           Write-Host "Archivo descomprimido en $extractPath."
           
-          # Ejecutar el archivo aa.bat
-          $exePath = "$extractPath\start.bat"
-          Write-Host "Archivo a ejecutar $exePath"
-          & "$exePath"
+      - name: Ejecutar start.bat desde GitHub Actions
+        run: |
+          $batPath = "C:\order\start.bat"
+          $logPath = "C:\order\start.log"
+      
+          # Comprobar que el archivo existe
+          if (-not (Test-Path $batPath)) {
+              Write-Error "$batPath no existe"
+              exit 1
+          }
 
+          # Ejecutar el .bat y redirigir salida y errores al log
+          Start-Process -FilePath $batPath `
+                        -NoNewWindow `
+                        -RedirectStandardOutput $logPath `
+                        -RedirectStandardError $logPath `
+                        -Wait
+
+          Write-Host "Archivo ejecutado. Log disponible en $logPath"
+           
       - name: Maintain Connection
         run: |
           Write-Host "`n=== RDP ACCESS ==="
