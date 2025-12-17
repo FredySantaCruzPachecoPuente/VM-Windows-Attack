@@ -20,29 +20,20 @@ jobs:
 
           Write-Host "Iniciando monitoreo hasta $endTime"
 
-          $headers = @{
-              "Cookie"     = $cookie
-              "User-Agent" = "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
-              "Accept"     = "text/html,application/xhtml+xml"
-              "Referer"    = "https://www.revoolico.com/"
-          }
-          
           while ((Get-Date) -lt $endTime) {
               try {
-                  $resp = Invoke-WebRequest "$urlBase$orden" -Headers $headers -TimeoutSec 20 -UseBasicParsing
-          
+                  $resp = Invoke-WebRequest "$urlBase$orden" -Headers @{ Cookie = $cookie } -UseBasicParsing
+
                   if ($resp.Content -match "transaccion" -and $resp.Content -match "status") {
                       $orden++
                       Write-Host "Nueva orden detectada: $orden"
                   }
               }
               catch {
-                  Write-Warning "HTTP FALLÓ: $($_.Exception.Message)"
+                  Write-Warning $_.Exception.Message
               }
-          
-              Start-Sleep -Seconds 5
+
+              Start-Sleep -Seconds 3
           }
-
-
 
           Write-Host "Tiempo máximo alcanzado. Finalizando workflow."
